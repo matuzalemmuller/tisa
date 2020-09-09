@@ -1,0 +1,5 @@
+# Astah lock file
+*.lock
+
+# OSX file
+.DS_Store
