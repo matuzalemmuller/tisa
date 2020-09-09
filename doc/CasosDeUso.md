@@ -83,6 +83,7 @@
 3. [OUT] O sistema exibe um gráfico com a curva de fermentação da batelada presente no fermentador.
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+----
 
 #### Caso de Uso: Atribuir SensorFermentacao
 
@@ -90,6 +91,7 @@
 2. [IN] O usuário seleciona um sensor da lista para atribuir o sensor ao fermentador.
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+----
 
 #### Caso de Uso: Associar Batelada-Fermentador
 
@@ -99,6 +101,7 @@
 4. [IN] O usuário seleciona um fermentador para associar à batelada.
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+----
 
 #### Caso de Uso: Iniciar Nova Fermentacao
 
@@ -106,8 +109,9 @@
 2. Associar `Batelada-Fermentador`
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+----
 
-#### Finalizar Fermentacao
+#### Caso de Uso: Finalizar Fermentacao
 
 1. [OUT] O sistema apresenta uma lista de fermentadores com conteúdo.
 2. [IN] O usuário seleciona um dos fermentadores.
