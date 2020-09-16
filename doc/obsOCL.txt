@@ -1,0 +1,3 @@
+Nos Diagramas de Sequencia de Iniciar/Finalizar Fermentação:
+O status do fermentador é uma alteração de atributo - de acordo com a aula passada seria uma pós-condição do OCL.
+Infelizmente não achei no Astah onde criar o OCL - vou perguntar para ele hoje.
