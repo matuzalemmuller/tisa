@@ -1,0 +1,31 @@
+Considerando o LOTE para controle de produção fica entendido o seguinte:
+
+1 - Lote terá atributos "Data de Produção" e "Data de Fabricação"
+1.1 - Data de Produção: no momento que o lote é criado, quando o liquido inicia a fermentação dentro do fermentador
+Data de Fabricaçao: no momento que a fermentação é finalizada e o liquido está pronto para o envase.
+
+2 - Ao INICIAR a fermentação o Lote é criado, e no contrato fica o seguinte:
+2.1 fermentador^setStatus(EM_FERMENTACAO), 
+    lote.isNewInstance(Fermentador, ReceitaCerveja), 
+	lote^setDataProducao(new Date()), 
+	sensor^setLote(lote^obterId()), 
+	sensor^setStatus(MONITORAMENTO)
+	** O SENSOR deve mudar o status para MONITORAMENTO para ele saber que a vai começar a monitorar nesse momento
+	*** O SENSOR possui um atributo LOTE para no momento que ele publicar o valor lido na nuvem amarrar esse valor ao LOTE, por exemplo em um banco NoSQL ficaria:
+	+ CURVA_FERMENTACAO
+		- 135 (ID_do_LOTE)
+			-2020-09-22
+				-09:00:00 - 10.5 (valor lido)
+			-2020-09-23
+				....
+		- 136 (ID_Outro_LOTE)
+			-2020-09-22
+				-09:00:00 - 12.5 
+
+3 - Ao FINALIZAR a fermentação o Lote recebe a "Data de Fabricaçao", e no contrato fica o seguinte:
+3.1 fermentador^setStatus(FERMENTACAO_COMPLETA), 
+	lote^setDataFabricacao(new Date()), 
+	sensor^setStatus(STANDBY)
+	** O SENSOR muda o status para STANDBY para ele saber que NÃO deve mais monitorar.
+
+4 - No diagrama de sequencia de iniciarFermentacao foi adicionado um passo para listarReceitas, selecionarReceita - para associá-la ao lote.
