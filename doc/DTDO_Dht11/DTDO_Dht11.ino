@@ -109,7 +109,27 @@ String dataFormatada(){
   if(segundo.length()<2)
     segundo = "0"+segundo;
     
-  agora = String(ano)+"-"+String(mes)+"-"+String(dia)+"/"+String(hora)+":"+String(minuto)+":"+segundo;
+  //agora = String(ano)+"-"+String(mes)+"-"+String(dia)+"/"+String(hora)+":"+String(minuto)+":"+segundo;
+  agora = String(ano)+"-"+String(mes)+"-"+String(dia);
+  return agora;
+}
+
+String horaFormatada(){
+  String agora;
+  time_t t = now(); // Get the current time
+  hora = String(hour(t));
+  minuto = String(minute(t));
+  segundo = String(second(t));
+
+  if(hora.length()<2)
+    hora = "0"+hora;  
+  if(minuto.length()<2)
+    minuto = "0"+minuto;
+  if(segundo.length()<2)
+    segundo = "0"+segundo;
+    
+  //agora = String(ano)+"-"+String(mes)+"-"+String(dia)+"/"+String(hora)+":"+String(minuto)+":"+segundo;
+  agora = String(hora)+":"+String(minuto)+":"+String(segundo);
   return agora;
 }
 
@@ -219,20 +239,14 @@ void readSensor(){
   leitura+="/";
   leitura+=dataFormatada();
   
-  String umidKey = leitura+"/umidade";
-  String tempKey = leitura+"/temperatura";
+  String umidKey = leitura+"/umidade/"+horaFormatada();
+  String tempKey = leitura+"/temperatura/"+horaFormatada();
   /** String tempValue = tempKey+"/";
   tempValue+="valor";**/
 
-  if (tempStats.count() == 100){
+  if (tempStats.count() == 1000){
   Serial.println("*****publica leitura Sensor*****");  
-  /** Serial.print(tempValue);
-  Serial.print("/t");
-  Serial.println(temperatura_lida);
-  if(!Firebase.setFloat(firebaseData,tempValue, temperatura_lida)){
-    Serial.print("Falhou:\t");
-    Serial.println(firebaseData.errorReason());
-  }**/
+
     Firebase.setFloat(firebaseData, tempKey+"/valor", temperatura_lida);
     Firebase.setFloat(firebaseData, tempKey+"/min", tempStats.minimum());
     Firebase.setFloat(firebaseData, tempKey+"/max", tempStats.maximum());
@@ -248,9 +262,10 @@ void readSensor(){
     Firebase.setFloat(firebaseData, umidKey+"/stdev", umidStats.pop_stdev());     
 
     tempStats.clear();
-    umidStats.clear();
-    delay(500);
+    umidStats.clear();  
+    delay(2000);  
   }
+  //delay(100);
 }
 
 void loop(){
