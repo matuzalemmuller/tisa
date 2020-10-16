@@ -1,15 +1,16 @@
 version: "3.5"
 services:
   node-red:
-    image: matuzalemmuller/tisa:1.0.0
+    image: matuzalemmuller/tisa:latest
     hostname: node-red
     container_name: node-red
     expose:
       - "1880"
     ports:
-      - "1880:1880"
+      - "80:1880"
     networks:
-      - default
+      default:
+        ipv4_address: 172.18.1.2
 
   mosquitto:
     image: eclipse-mosquitto
@@ -22,7 +23,8 @@ services:
       - "1883:1883"
       - "9001:9001"
     networks:
-      - default
+      default:
+        ipv4_address: 172.18.1.3
 
 networks:
   default:

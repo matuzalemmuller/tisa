@@ -14,5 +14,6 @@ Stop Node-RED and mosquitto servers:
 docker-compose down
 ```
 
-* Node-RED is available at port 1880
+* Node-RED is available at port 80
 * Mosquitto is available at ports 1883 and 9001
+* Node-RED password is `admin1234`

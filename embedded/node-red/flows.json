@@ -237,7 +237,7 @@
     "type": "mqtt-broker",
     "z": "",
     "name": "MQTT",
-    "broker": "host.docker.internal",
+    "broker": "172.18.1.3",
     "port": "1883",
     "clientid": "",
     "usetls": false,
