@@ -1,0 +1,31 @@
+version: "3.5"
+services:
+  node-red:
+    image: matuzalemmuller/tisa:1.0.0
+    hostname: node-red
+    container_name: node-red
+    expose:
+      - "1880"
+    ports:
+      - "1880:1880"
+    networks:
+      - default
+
+  mosquitto:
+    image: eclipse-mosquitto
+    hostname: mosquitto
+    container_name: mosquitto
+    expose:
+      - "1883"
+      - "9001"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      - default
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24

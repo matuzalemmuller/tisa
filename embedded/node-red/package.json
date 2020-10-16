@@ -1,0 +1,33 @@
+{
+  "name": "tisa-ppgeas",
+  "version": "1.0.0",
+  "description": "Node-RED server for project of TISA course",
+  "homepage": "https://github.com/matuzalemmuller/tisa/embedded",
+  "license": "MIT",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/matuzalemmuller/tisa"
+  },
+  "main": "node_modules/node-red/red/red.js",
+  "scripts": {
+      "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+      "debug": "node --inspect=0.0.0.0:9229 $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+      "debug_brk": "node --inspect=0.0.0.0:9229 --inspect-brk $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+  },
+  "contributors": [
+      {
+          "name": "Matuzalem Muller"
+      },
+      {
+          "name": "Michela Limaco"
+      },
+      {
+          "name": "Patrícia Mayer"
+      }
+  ],
+  "dependencies": {
+      "node-red": "1.2.1",
+      "node-red-contrib-firebase" : "1.1.1",
+      "node-red-dashboard" : "2.23.4"
+  }
+}

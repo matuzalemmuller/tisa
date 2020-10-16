@@ -1,7 +1,7 @@
-#include "FirebaseESP8266.h"
+#include "lib/firebase/FirebaseESP8266.h"
 #include <ESP8266WiFi.h>
 #include <DHT.h>
-#include "Statistic.h"
+#include "lib/statistic/Statistic.h"
 
 #include <PubSubClient.h> // Importa a Biblioteca PubSubClient
 #include <Time.h>
