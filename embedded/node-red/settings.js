@@ -138,10 +138,10 @@ module.exports = {
     // This property can be either an object, containing both a (private) key and a (public) certificate,
     // or a function that returns such an object:
     //// https object:
-    //https: {
-    //  key: require("fs").readFileSync('privkey.pem'),
-    //  cert: require("fs").readFileSync('cert.pem')
-    //},
+    // https: {
+    //   key: require("fs").readFileSync('/app/privkey.pem'),
+    //   cert: require("fs").readFileSync('/app/fullchain.pem')
+    // },
     ////https function:
     // https: function() {
     //     // This function should return the options object, or a Promise
