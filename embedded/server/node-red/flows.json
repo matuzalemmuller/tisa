@@ -1,0 +1,1086 @@
+[{
+	"id": "807d8ce0.7020b8",
+	"type": "tab",
+	"label": "DTO_DHT11",
+	"disabled": false,
+	"info": ""
+}, {
+	"id": "e487dc23.bac828",
+	"type": "mqtt-broker",
+	"z": "",
+	"name": "MQTT",
+	"broker": "172.18.1.3",
+	"port": "1883",
+	"clientid": "",
+	"usetls": false,
+	"compatmode": false,
+	"keepalive": "60",
+	"cleansession": true,
+	"birthTopic": "",
+	"birthQos": "0",
+	"birthPayload": "",
+	"closeTopic": "",
+	"closeQos": "0",
+	"closePayload": "",
+	"willTopic": "",
+	"willQos": "0",
+	"willPayload": ""
+}, {
+	"id": "d77cb8cc.90f3e",
+	"type": "ui_group",
+	"z": "",
+	"name": " DHT11 Node-RED Dashboard",
+	"tab": "6c490a2b.068994",
+	"order": 1,
+	"disp": true,
+	"width": "15",
+	"collapse": true
+}, {
+	"id": "6c490a2b.068994",
+	"type": "ui_tab",
+	"z": "",
+	"name": "Home",
+	"icon": "dashboard",
+	"disabled": false,
+	"hidden": false
+}, {
+	"id": "74ed8ae0.2ca3ac",
+	"type": "firebase config",
+	"z": "",
+	"firebaseurl": "outbreak-control-floripa",
+	"loginType": "none"
+}, {
+	"id": "ba513540.4bc22",
+	"type": "ui_base",
+	"theme": {
+		"name": "theme-light",
+		"lightTheme": {
+			"default": "#0094CE",
+			"baseColor": "#0094CE",
+			"baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+			"edited": true,
+			"reset": false
+		},
+		"darkTheme": {
+			"default": "#097479",
+			"baseColor": "#097479",
+			"baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+			"edited": false
+		},
+		"customTheme": {
+			"name": "Untitled Theme 1",
+			"default": "#4B7930",
+			"baseColor": "#4B7930",
+			"baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+		},
+		"themeState": {
+			"base-color": {
+				"default": "#0094CE",
+				"value": "#0094CE",
+				"edited": false
+			},
+			"page-titlebar-backgroundColor": {
+				"value": "#0094CE",
+				"edited": false
+			},
+			"page-backgroundColor": {
+				"value": "#fafafa",
+				"edited": false
+			},
+			"page-sidebar-backgroundColor": {
+				"value": "#ffffff",
+				"edited": false
+			},
+			"group-textColor": {
+				"value": "#1bbfff",
+				"edited": false
+			},
+			"group-borderColor": {
+				"value": "#ffffff",
+				"edited": false
+			},
+			"group-backgroundColor": {
+				"value": "#ffffff",
+				"edited": false
+			},
+			"widget-textColor": {
+				"value": "#111111",
+				"edited": false
+			},
+			"widget-backgroundColor": {
+				"value": "#0094ce",
+				"edited": false
+			},
+			"widget-borderColor": {
+				"value": "#ffffff",
+				"edited": false
+			},
+			"base-font": {
+				"value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+			}
+		},
+		"angularTheme": {
+			"primary": "indigo",
+			"accents": "blue",
+			"warn": "red",
+			"background": "grey"
+		}
+	},
+	"site": {
+		"name": "Node-RED Dashboard",
+		"hideToolbar": "false",
+		"allowSwipe": "false",
+		"lockMenu": "false",
+		"allowTempTheme": "true",
+		"dateFormat": "DD/MM/YYYY",
+		"sizes": {
+			"sx": 48,
+			"sy": 48,
+			"gx": 6,
+			"gy": 6,
+			"cx": 6,
+			"cy": 6,
+			"px": 0,
+			"py": 0
+		}
+	}
+}, {
+	"id": "24b768d5.14ae48",
+	"type": "ui_spacer",
+	"name": "spacer",
+	"group": "d77cb8cc.90f3e",
+	"order": 1,
+	"width": 1,
+	"height": 1
+}, {
+	"id": "b70e84f4.76df88",
+	"type": "ui_spacer",
+	"name": "spacer",
+	"group": "d77cb8cc.90f3e",
+	"order": 3,
+	"width": 1,
+	"height": 1
+}, {
+	"id": "fffbc4d8.84c648",
+	"type": "ui_spacer",
+	"name": "spacer",
+	"group": "d77cb8cc.90f3e",
+	"order": 5,
+	"width": 1,
+	"height": 1
+}, {
+	"id": "d36d08c.7a32ef8",
+	"type": "ui_spacer",
+	"name": "spacer",
+	"group": "d77cb8cc.90f3e",
+	"order": 7,
+	"width": 15,
+	"height": 1
+}, {
+	"id": "4be82f72.fe9c5",
+	"type": "ui_spacer",
+	"name": "spacer",
+	"group": "d77cb8cc.90f3e",
+	"order": 11,
+	"width": 2,
+	"height": 1
+}, {
+	"id": "db4cf772.67c6f",
+	"type": "mqtt out",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"topic": "dto/dht11/status",
+	"qos": "0",
+	"retain": "",
+	"broker": "e487dc23.bac828",
+	"x": 560,
+	"y": 220,
+	"wires": []
+}, {
+	"id": "205161ea.492bce",
+	"type": "comment",
+	"z": "807d8ce0.7020b8",
+	"name": "INFO",
+	"info": "Ao clicar no START é enviado o param \"1\" para o tópico dto/dht11/status, o qual o ESP8266 está subscrito. Quando o ESP8266 recebe '1' ele começa a coletar os dados dos sensores e envia para o banco NoSQL.\nAo clicar no STOP é enviado o param \"0\" para o tópico dto/dht11/status, e quando o ESP8266 recebe '0' ele para de coletar dados até que receba novamente o param '1'",
+	"x": 630,
+	"y": 40,
+	"wires": []
+}, {
+	"id": "da595a6c.3a48a8",
+	"type": "firebase.on",
+	"z": "807d8ce0.7020b8",
+	"name": "lastValue_temperatura",
+	"firebaseconfig": "74ed8ae0.2ca3ac",
+	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-16/temperatura",
+	"atStart": true,
+	"eventType": "value",
+	"queries": [{
+		"name": "limitToLast",
+		"value": "1"
+	}, {
+		"name": "orderByKey",
+		"value": ""
+	}],
+	"x": 240,
+	"y": 400,
+	"wires": [
+		["c39e598.3e42928"]
+	]
+}, {
+	"id": "c39e598.3e42928",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "extract_temperatura_media",
+	"func": "var novo = JSON.stringify(msg.payload);\nvar parts = novo.split(\"{\");\nvar key = parts[1].substring(0,parts[1].length-1);\nvar string = novo.replace(key,\"\\\"chave\\\"\");\n\nvar obj = JSON.parse(string);\n\nmsg.payload = obj.chave.media;\nreturn msg;\n",
+	"outputs": 1,
+	"noerr": 0,
+	"initialize": "",
+	"finalize": "",
+	"x": 520,
+	"y": 400,
+	"wires": [
+		["fee7db4c.db15d", "b9944ce7.0aa2b", "77ccdf08.8a09", "e3c4ef86.fadee"]
+	]
+}, {
+	"id": "fee7db4c.db15d",
+	"type": "ui_chart",
+	"z": "807d8ce0.7020b8",
+	"name": "Temperatura Média",
+	"group": "d77cb8cc.90f3e",
+	"order": 8,
+	"width": 9,
+	"height": 5,
+	"label": "Temperatura",
+	"chartType": "line",
+	"legend": "false",
+	"xformat": "HH:mm:ss",
+	"interpolate": "linear",
+	"nodata": "",
+	"dot": false,
+	"ymin": "0",
+	"ymax": "50",
+	"removeOlder": 1,
+	"removeOlderPoints": "",
+	"removeOlderUnit": "3600",
+	"cutout": 0,
+	"useOneColor": false,
+	"useUTC": false,
+	"colors": ["#1f77b4", "#aec7e8", "#ff7f0e", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5"],
+	"useOldStyle": false,
+	"outputs": 1,
+	"x": 970,
+	"y": 400,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "ed1e70f2.c42428",
+	"type": "firebase.on",
+	"z": "807d8ce0.7020b8",
+	"name": "lastValue_umidade",
+	"firebaseconfig": "74ed8ae0.2ca3ac",
+	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-16/umidade",
+	"atStart": true,
+	"eventType": "value",
+	"queries": [{
+		"name": "limitToLast",
+		"value": "1"
+	}],
+	"x": 230,
+	"y": 480,
+	"wires": [
+		["e7c453ef.a593d"]
+	]
+}, {
+	"id": "e7c453ef.a593d",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "extract_umidade_media",
+	"func": "var novo = JSON.stringify(msg.payload);\nvar parts = novo.split(\"{\");\nvar key = parts[1].substring(0,parts[1].length-1);\nvar string = novo.replace(key,\"\\\"chave\\\"\");\n\nvar obj = JSON.parse(string);\n\nmsg.payload = obj.chave.media;\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"x": 490,
+	"y": 500,
+	"wires": [
+		["c2a0cf6f.c2a5"]
+	]
+}, {
+	"id": "c2a0cf6f.c2a5",
+	"type": "ui_gauge",
+	"z": "807d8ce0.7020b8",
+	"name": "Umidade",
+	"group": "d77cb8cc.90f3e",
+	"order": 9,
+	"width": 6,
+	"height": 5,
+	"gtype": "gage",
+	"title": "Umidade",
+	"label": "units",
+	"format": "{{value}}",
+	"min": 0,
+	"max": "100",
+	"colors": ["#00b500", "#e6e600", "#ca3838"],
+	"seg1": "",
+	"seg2": "",
+	"x": 1000,
+	"y": 500,
+	"wires": []
+}, {
+	"id": "4b37fad3.284674",
+	"type": "ui_button",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 2,
+	"width": 3,
+	"height": 1,
+	"passthru": false,
+	"label": "START",
+	"tooltip": "Clique para iniciar a aquisição dos dados",
+	"color": "",
+	"bgcolor": "",
+	"icon": "",
+	"payload": "1",
+	"payloadType": "str",
+	"topic": "",
+	"x": 160,
+	"y": 140,
+	"wires": [
+		["db4cf772.67c6f", "c21d0b3d.a88398"]
+	]
+}, {
+	"id": "114af7e4.0c771",
+	"type": "ui_button",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 4,
+	"width": 3,
+	"height": 1,
+	"passthru": false,
+	"label": "STOP",
+	"tooltip": "Clique para parar a aquisição dos dados",
+	"color": "",
+	"bgcolor": "",
+	"icon": "",
+	"payload": "0",
+	"payloadType": "str",
+	"topic": "",
+	"x": 150,
+	"y": 240,
+	"wires": [
+		["db4cf772.67c6f", "2b8e889.6953478"]
+	]
+}, {
+	"id": "bb767fcb.7eefe8",
+	"type": "ui_text",
+	"z": "807d8ce0.7020b8",
+	"group": "d77cb8cc.90f3e",
+	"order": 6,
+	"width": 6,
+	"height": 1,
+	"name": "",
+	"label": "Status: ",
+	"format": "{{msg.payload}}",
+	"layout": "col-center",
+	"x": 560,
+	"y": 100,
+	"wires": []
+}, {
+	"id": "c21d0b3d.a88398",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "start msg status",
+	"rules": [{
+		"t": "change",
+		"p": "payload",
+		"pt": "msg",
+		"from": "1",
+		"fromt": "str",
+		"to": "Aquisição de Dados em curso",
+		"tot": "str"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 340,
+	"y": 80,
+	"wires": [
+		["bb767fcb.7eefe8"]
+	]
+}, {
+	"id": "2b8e889.6953478",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "stop msg status",
+	"rules": [{
+		"t": "change",
+		"p": "payload",
+		"pt": "msg",
+		"from": "0",
+		"fromt": "str",
+		"to": "Aquisição de dados parada",
+		"tot": "str"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 360,
+	"y": 140,
+	"wires": [
+		["bb767fcb.7eefe8"]
+	]
+}, {
+	"id": "7105f76a.996878",
+	"type": "ui_button",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 14,
+	"width": 0,
+	"height": 0,
+	"passthru": false,
+	"label": "Iniciar Monitoramento",
+	"tooltip": "",
+	"color": "",
+	"bgcolor": "",
+	"icon": "",
+	"payload": "true",
+	"payloadType": "bool",
+	"topic": "",
+	"x": 680,
+	"y": 900,
+	"wires": [
+		["1b119dec.063c32"]
+	]
+}, {
+	"id": "cff579fa.bc6368",
+	"type": "ui_button",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 15,
+	"width": 0,
+	"height": 0,
+	"passthru": false,
+	"label": "Parar Monitoramento",
+	"tooltip": "",
+	"color": "",
+	"bgcolor": "",
+	"icon": "",
+	"payload": "false",
+	"payloadType": "bool",
+	"topic": "",
+	"x": 680,
+	"y": 1100,
+	"wires": [
+		["adf629e7.4d7528", "4f63e665.a242a8"]
+	]
+}, {
+	"id": "b9944ce7.0aa2b",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "Notifica Temp Max",
+	"func": "let temp_atual = msg.payload;\nlet temp_max = global.get(\"temp_max\");\n\nif (temp_atual > temp_max)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"initialize": "",
+	"finalize": "",
+	"x": 970,
+	"y": 220,
+	"wires": [
+		["b92144ca.4cd498"]
+	]
+}, {
+	"id": "77ccdf08.8a09",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "Notifica Tem Min",
+	"func": "let temp_atual = msg.payload;\nlet temp_min = global.get(\"temp_min\");\n\nif (temp_atual < temp_min)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"initialize": "",
+	"finalize": "",
+	"x": 970,
+	"y": 300,
+	"wires": [
+		["ff2d0045.cc8d"]
+	]
+}, {
+	"id": "25acb6f4.cad04a",
+	"type": "ui_text_input",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"label": "Temperatura Mínima",
+	"tooltip": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 10,
+	"width": 7,
+	"height": 1,
+	"passthru": false,
+	"mode": "number",
+	"delay": "0",
+	"topic": "",
+	"x": 2460,
+	"y": 940,
+	"wires": [
+		["2d0bfaa2.5c7876"]
+	]
+}, {
+	"id": "63d76ed3.1279b",
+	"type": "ui_text_input",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"label": "Temperatura Máxima",
+	"tooltip": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 12,
+	"width": 6,
+	"height": 1,
+	"passthru": false,
+	"mode": "number",
+	"delay": "0",
+	"topic": "",
+	"x": 2460,
+	"y": 1000,
+	"wires": [
+		["fc6c721f.5363d"]
+	]
+}, {
+	"id": "2d0bfaa2.5c7876",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Salvar Temp Min",
+	"rules": [{
+		"t": "set",
+		"p": "temp_min",
+		"pt": "global",
+		"to": "payload",
+		"tot": "msg"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 2710,
+	"y": 940,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "fc6c721f.5363d",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Salvar Temp Max",
+	"rules": [{
+		"t": "set",
+		"p": "temp_max",
+		"pt": "global",
+		"to": "payload",
+		"tot": "msg"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 2710,
+	"y": 1000,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "ab0162d0.bf806",
+	"type": "ui_text_input",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"label": "Endereco Email",
+	"tooltip": "",
+	"group": "d77cb8cc.90f3e",
+	"order": 13,
+	"width": 0,
+	"height": 0,
+	"passthru": false,
+	"mode": "email",
+	"delay": "0",
+	"topic": "",
+	"x": 2460,
+	"y": 1060,
+	"wires": [
+		["bf6db006.0f308"]
+	]
+}, {
+	"id": "bf6db006.0f308",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Salvar End Email",
+	"rules": [{
+		"t": "set",
+		"p": "email",
+		"pt": "global",
+		"to": "payload",
+		"tot": "msg"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 2710,
+	"y": 1060,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "adf629e7.4d7528",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Parar Monitoramento",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "true",
+		"tot": "bool"
+	}, {
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "email",
+		"tot": "flow"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1000,
+	"y": 1100,
+	"wires": [
+		["7105f76a.996878", "9cf3c51b.be63f8"]
+	]
+}, {
+	"id": "1903f891.b2faa7",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Habilitar Botão Parar Monitoramento",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "true",
+		"tot": "bool"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 310,
+	"y": 1100,
+	"wires": [
+		["cff579fa.bc6368"]
+	]
+}, {
+	"id": "4f63e665.a242a8",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Desabilitar Botão Parar Monitoramento",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "false",
+		"tot": "bool"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 660,
+	"y": 1200,
+	"wires": [
+		["cff579fa.bc6368"]
+	]
+}, {
+	"id": "fcfa922a.1234b",
+	"type": "inject",
+	"z": "807d8ce0.7020b8",
+	"name": "Resetar Opções",
+	"props": [{
+		"p": "payload"
+	}],
+	"repeat": "",
+	"crontab": "",
+	"once": true,
+	"onceDelay": 0.1,
+	"topic": "",
+	"payload": "true",
+	"payloadType": "bool",
+	"x": 260,
+	"y": 1320,
+	"wires": [
+		["4f63e665.a242a8", "9cf3c51b.be63f8"]
+	]
+}, {
+	"id": "2247dbdb.d14464",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Habilitar/Desabilitar Opção",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "payload",
+		"tot": "msg"
+	}, {
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "temp_min",
+		"tot": "global"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 2180,
+	"y": 940,
+	"wires": [
+		["25acb6f4.cad04a"]
+	]
+}, {
+	"id": "d47d2c67.d7c7d",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Habilitar/Desabilitar Opção",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "payload",
+		"tot": "msg"
+	}, {
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "temp_max",
+		"tot": "global"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 2180,
+	"y": 1000,
+	"wires": [
+		["63d76ed3.1279b"]
+	]
+}, {
+	"id": "97fce7f6.50c198",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Habilitar/Desabilitar Opção",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "payload",
+		"tot": "msg"
+	}, {
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "email",
+		"tot": "global"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 2180,
+	"y": 1060,
+	"wires": [
+		["ab0162d0.bf806"]
+	]
+}, {
+	"id": "5f622b81.aabe34",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Habilitar Botão Iniciar Monitoramento",
+	"rules": [{
+		"t": "set",
+		"p": "enabled",
+		"pt": "msg",
+		"to": "false",
+		"tot": "bool"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 690,
+	"y": 760,
+	"wires": [
+		["7105f76a.996878"]
+	]
+}, {
+	"id": "2c23a876.c2bb08",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Desabilitar Opções",
+	"rules": [{
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "false",
+		"tot": "bool"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1610,
+	"y": 900,
+	"wires": [
+		["ae08ba75.537508"]
+	]
+}, {
+	"id": "9cf3c51b.be63f8",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Habilitar Opções",
+	"rules": [{
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "true",
+		"tot": "bool"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1610,
+	"y": 1100,
+	"wires": [
+		["ae08ba75.537508"]
+	]
+}, {
+	"id": "ae08ba75.537508",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Buffer",
+	"rules": [{
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "payload",
+		"tot": "msg"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1870,
+	"y": 1000,
+	"wires": [
+		["2247dbdb.d14464", "d47d2c67.d7c7d", "97fce7f6.50c198"]
+	]
+}, {
+	"id": "1b119dec.063c32",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "Verifica Valores",
+	"func": "let temp_min = global.get(\"temp_min\");\nlet temp_max = global.get(\"temp_max\");\nlet email = global.get(\"email\");\n\nif ((temp_min !== null) && (temp_max !== null))\n{\n    node.warn(\"1\");\n    if ((temp_min >= 0) && (temp_min < temp_max))\n    {\n        node.warn(\"2\");\n        if (email !== null)\n        {\n            node.warn(\"3\");\n            msg.payload = 1;\n            return msg;\n        }\n    }\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"initialize": "",
+	"finalize": "",
+	"x": 1000,
+	"y": 900,
+	"wires": [
+		["d7af044a.0bfc38"]
+	]
+}, {
+	"id": "cfb04367.ab70b",
+	"type": "ui_toast",
+	"z": "807d8ce0.7020b8",
+	"position": "dialog",
+	"displayTime": "4",
+	"highlight": "",
+	"sendall": true,
+	"outputs": 1,
+	"ok": "OK",
+	"cancel": "",
+	"raw": false,
+	"topic": "Erro",
+	"name": "Notifica Usuário",
+	"x": 1800,
+	"y": 760,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "d7af044a.0bfc38",
+	"type": "switch",
+	"z": "807d8ce0.7020b8",
+	"name": "Switch Valores",
+	"property": "payload",
+	"propertyType": "msg",
+	"rules": [{
+		"t": "eq",
+		"v": "0",
+		"vt": "num"
+	}, {
+		"t": "eq",
+		"v": "1",
+		"vt": "num"
+	}],
+	"checkall": "false",
+	"repair": false,
+	"outputs": 2,
+	"x": 1260,
+	"y": 900,
+	"wires": [
+		["3cb8c777.cd2008"],
+		["2c23a876.c2bb08", "5f622b81.aabe34", "1903f891.b2faa7"]
+	]
+}, {
+	"id": "3cb8c777.cd2008",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Define Mensagem Erro",
+	"rules": [{
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": " Valores inválidos. Revise os valores e tente novamente.",
+		"tot": "str"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1540,
+	"y": 760,
+	"wires": [
+		["cfb04367.ab70b"]
+	]
+}, {
+	"id": "b92144ca.4cd498",
+	"type": "switch",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"property": "payload",
+	"propertyType": "msg",
+	"rules": [{
+		"t": "eq",
+		"v": "1",
+		"vt": "num"
+	}],
+	"checkall": "true",
+	"repair": false,
+	"outputs": 1,
+	"x": 1190,
+	"y": 220,
+	"wires": [
+		["3a7e4e6.93c99b2"]
+	]
+}, {
+	"id": "ff2d0045.cc8d",
+	"type": "switch",
+	"z": "807d8ce0.7020b8",
+	"name": "",
+	"property": "payload",
+	"propertyType": "msg",
+	"rules": [{
+		"t": "eq",
+		"v": "1",
+		"vt": "num"
+	}],
+	"checkall": "true",
+	"repair": false,
+	"outputs": 1,
+	"x": 1190,
+	"y": 300,
+	"wires": [
+		["3a7e4e6.93c99b2"]
+	]
+}, {
+	"id": "5418e19f.4015b",
+	"type": "http request",
+	"z": "807d8ce0.7020b8",
+	"name": "Notificar Usuário",
+	"method": "PUT",
+	"ret": "txt",
+	"paytoqs": "body",
+	"url": "172.18.1.4",
+	"tls": "",
+	"persist": false,
+	"proxy": "",
+	"authType": "",
+	"x": 1650,
+	"y": 260,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "3a7e4e6.93c99b2",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Enviar Temp Atual",
+	"rules": [{
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "temp_atual",
+		"tot": "global"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1430,
+	"y": 260,
+	"wires": [
+		["5418e19f.4015b"]
+	]
+}, {
+	"id": "e3c4ef86.fadee",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Salvar Temp Atual",
+	"rules": [{
+		"t": "set",
+		"p": "payload",
+		"pt": "msg",
+		"to": "temp_atual",
+		"tot": "global"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 970,
+	"y": 140,
+	"wires": [
+		[]
+	]
+}]
