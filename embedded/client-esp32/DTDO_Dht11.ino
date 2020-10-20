@@ -2,6 +2,7 @@
  * @author Michela Limaco - limaco@gmail.com
  * @description Esse software é parte do trabalho da discplina de Tecnicas de Implementação de Software Avançadas
  * da Pós-Graduação em Engenharia de Automação e Sistemas
+ * UFSC - Universidade Federal de Santa Catarina
  * Professor: Carlos Montez
  * Professor convidado: Evandro Cantú
  * Outubro de 2020. 
