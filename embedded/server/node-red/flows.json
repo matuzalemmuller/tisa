@@ -193,8 +193,8 @@
 	"qos": "0",
 	"retain": "",
 	"broker": "e487dc23.bac828",
-	"x": 560,
-	"y": 220,
+	"x": 810,
+	"y": 340,
 	"wires": []
 }, {
 	"id": "205161ea.492bce",
@@ -209,9 +209,9 @@
 	"id": "da595a6c.3a48a8",
 	"type": "firebase.on",
 	"z": "807d8ce0.7020b8",
-	"name": "lastValue_temperatura",
+	"name": "Arquirir Med Temperatura Banco",
 	"firebaseconfig": "74ed8ae0.2ca3ac",
-	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-16/temperatura",
+	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-20/temperatura",
 	"atStart": true,
 	"eventType": "value",
 	"queries": [{
@@ -221,8 +221,8 @@
 		"name": "orderByKey",
 		"value": ""
 	}],
-	"x": 240,
-	"y": 400,
+	"x": 210,
+	"y": 720,
 	"wires": [
 		["c39e598.3e42928"]
 	]
@@ -230,16 +230,16 @@
 	"id": "c39e598.3e42928",
 	"type": "function",
 	"z": "807d8ce0.7020b8",
-	"name": "extract_temperatura_media",
+	"name": "Extrair Temperatura Media",
 	"func": "var novo = JSON.stringify(msg.payload);\nvar parts = novo.split(\"{\");\nvar key = parts[1].substring(0,parts[1].length-1);\nvar string = novo.replace(key,\"\\\"chave\\\"\");\n\nvar obj = JSON.parse(string);\n\nmsg.payload = obj.chave.media;\nreturn msg;\n",
 	"outputs": 1,
 	"noerr": 0,
 	"initialize": "",
 	"finalize": "",
 	"x": 520,
-	"y": 400,
+	"y": 720,
 	"wires": [
-		["fee7db4c.db15d", "b9944ce7.0aa2b", "77ccdf08.8a09", "e3c4ef86.fadee"]
+		["fee7db4c.db15d", "e3c4ef86.fadee"]
 	]
 }, {
 	"id": "fee7db4c.db15d",
@@ -269,7 +269,7 @@
 	"useOldStyle": false,
 	"outputs": 1,
 	"x": 970,
-	"y": 400,
+	"y": 720,
 	"wires": [
 		[]
 	]
@@ -277,17 +277,17 @@
 	"id": "ed1e70f2.c42428",
 	"type": "firebase.on",
 	"z": "807d8ce0.7020b8",
-	"name": "lastValue_umidade",
+	"name": "Arquirir Med Umidade Banco",
 	"firebaseconfig": "74ed8ae0.2ca3ac",
-	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-16/umidade",
+	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-20/umidade",
 	"atStart": true,
 	"eventType": "value",
 	"queries": [{
 		"name": "limitToLast",
 		"value": "1"
 	}],
-	"x": 230,
-	"y": 480,
+	"x": 220,
+	"y": 800,
 	"wires": [
 		["e7c453ef.a593d"]
 	]
@@ -295,12 +295,14 @@
 	"id": "e7c453ef.a593d",
 	"type": "function",
 	"z": "807d8ce0.7020b8",
-	"name": "extract_umidade_media",
+	"name": "Extrair umidade media",
 	"func": "var novo = JSON.stringify(msg.payload);\nvar parts = novo.split(\"{\");\nvar key = parts[1].substring(0,parts[1].length-1);\nvar string = novo.replace(key,\"\\\"chave\\\"\");\n\nvar obj = JSON.parse(string);\n\nmsg.payload = obj.chave.media;\nreturn msg;",
 	"outputs": 1,
 	"noerr": 0,
-	"x": 490,
-	"y": 500,
+	"initialize": "",
+	"finalize": "",
+	"x": 520,
+	"y": 800,
 	"wires": [
 		["c2a0cf6f.c2a5"]
 	]
@@ -322,8 +324,8 @@
 	"colors": ["#00b500", "#e6e600", "#ca3838"],
 	"seg1": "",
 	"seg2": "",
-	"x": 1000,
-	"y": 500,
+	"x": 980,
+	"y": 800,
 	"wires": []
 }, {
 	"id": "4b37fad3.284674",
@@ -343,8 +345,8 @@
 	"payload": "1",
 	"payloadType": "str",
 	"topic": "",
-	"x": 160,
-	"y": 140,
+	"x": 430,
+	"y": 240,
 	"wires": [
 		["db4cf772.67c6f", "c21d0b3d.a88398"]
 	]
@@ -366,8 +368,8 @@
 	"payload": "0",
 	"payloadType": "str",
 	"topic": "",
-	"x": 150,
-	"y": 240,
+	"x": 420,
+	"y": 340,
 	"wires": [
 		["db4cf772.67c6f", "2b8e889.6953478"]
 	]
@@ -383,8 +385,8 @@
 	"label": "Status: ",
 	"format": "{{msg.payload}}",
 	"layout": "col-center",
-	"x": 560,
-	"y": 100,
+	"x": 960,
+	"y": 200,
 	"wires": []
 }, {
 	"id": "c21d0b3d.a88398",
@@ -405,8 +407,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 340,
-	"y": 80,
+	"x": 680,
+	"y": 180,
 	"wires": [
 		["bb767fcb.7eefe8"]
 	]
@@ -429,8 +431,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 360,
-	"y": 140,
+	"x": 680,
+	"y": 240,
 	"wires": [
 		["bb767fcb.7eefe8"]
 	]
@@ -452,8 +454,8 @@
 	"payload": "true",
 	"payloadType": "bool",
 	"topic": "",
-	"x": 680,
-	"y": 900,
+	"x": 740,
+	"y": 1140,
 	"wires": [
 		["1b119dec.063c32"]
 	]
@@ -475,8 +477,8 @@
 	"payload": "false",
 	"payloadType": "bool",
 	"topic": "",
-	"x": 680,
-	"y": 1100,
+	"x": 1060,
+	"y": 1320,
 	"wires": [
 		["adf629e7.4d7528", "4f63e665.a242a8"]
 	]
@@ -484,14 +486,14 @@
 	"id": "b9944ce7.0aa2b",
 	"type": "function",
 	"z": "807d8ce0.7020b8",
-	"name": "Notifica Temp Max",
-	"func": "let temp_atual = msg.payload;\nlet temp_max = global.get(\"temp_max\");\n\nif (temp_atual > temp_max)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
+	"name": "Comparar Temp Max",
+	"func": "let temp_atual = global.get(\"temp_atual\");\nlet temp_max = global.get(\"temp_max\");\n\nif (temp_atual > temp_max)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
 	"outputs": 1,
 	"noerr": 0,
 	"initialize": "",
 	"finalize": "",
-	"x": 970,
-	"y": 220,
+	"x": 1780,
+	"y": 540,
 	"wires": [
 		["b92144ca.4cd498"]
 	]
@@ -499,14 +501,14 @@
 	"id": "77ccdf08.8a09",
 	"type": "function",
 	"z": "807d8ce0.7020b8",
-	"name": "Notifica Tem Min",
-	"func": "let temp_atual = msg.payload;\nlet temp_min = global.get(\"temp_min\");\n\nif (temp_atual < temp_min)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
+	"name": "Comparar Temp Min",
+	"func": "let temp_atual = global.get(\"temp_atual\");\nlet temp_min = global.get(\"temp_min\");\n\nif (temp_atual < temp_min)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
 	"outputs": 1,
 	"noerr": 0,
 	"initialize": "",
 	"finalize": "",
-	"x": 970,
-	"y": 300,
+	"x": 1780,
+	"y": 620,
 	"wires": [
 		["ff2d0045.cc8d"]
 	]
@@ -525,8 +527,8 @@
 	"mode": "number",
 	"delay": "0",
 	"topic": "",
-	"x": 2460,
-	"y": 940,
+	"x": 2520,
+	"y": 1180,
 	"wires": [
 		["2d0bfaa2.5c7876"]
 	]
@@ -545,8 +547,8 @@
 	"mode": "number",
 	"delay": "0",
 	"topic": "",
-	"x": 2460,
-	"y": 1000,
+	"x": 2520,
+	"y": 1240,
 	"wires": [
 		["fc6c721f.5363d"]
 	]
@@ -567,8 +569,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 2710,
-	"y": 940,
+	"x": 2770,
+	"y": 1180,
 	"wires": [
 		[]
 	]
@@ -589,8 +591,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 2710,
-	"y": 1000,
+	"x": 2770,
+	"y": 1240,
 	"wires": [
 		[]
 	]
@@ -609,8 +611,8 @@
 	"mode": "email",
 	"delay": "0",
 	"topic": "",
-	"x": 2460,
-	"y": 1060,
+	"x": 2520,
+	"y": 1300,
 	"wires": [
 		["bf6db006.0f308"]
 	]
@@ -631,8 +633,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 2710,
-	"y": 1060,
+	"x": 2770,
+	"y": 1300,
 	"wires": [
 		[]
 	]
@@ -659,8 +661,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 1000,
-	"y": 1100,
+	"x": 1360,
+	"y": 1320,
 	"wires": [
 		["7105f76a.996878", "9cf3c51b.be63f8"]
 	]
@@ -681,8 +683,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 310,
-	"y": 1100,
+	"x": 730,
+	"y": 1320,
 	"wires": [
 		["cff579fa.bc6368"]
 	]
@@ -703,8 +705,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 660,
-	"y": 1200,
+	"x": 1040,
+	"y": 1420,
 	"wires": [
 		["cff579fa.bc6368"]
 	]
@@ -712,7 +714,7 @@
 	"id": "fcfa922a.1234b",
 	"type": "inject",
 	"z": "807d8ce0.7020b8",
-	"name": "Resetar Opções",
+	"name": "Inicializa UI e Variaveis",
 	"props": [{
 		"p": "payload"
 	}],
@@ -723,10 +725,10 @@
 	"topic": "",
 	"payload": "true",
 	"payloadType": "bool",
-	"x": 260,
-	"y": 1320,
+	"x": 280,
+	"y": 1820,
 	"wires": [
-		["4f63e665.a242a8", "9cf3c51b.be63f8"]
+		["4f63e665.a242a8", "9cf3c51b.be63f8", "4ee70891.ac3618", "5f622b81.aabe34"]
 	]
 }, {
 	"id": "2247dbdb.d14464",
@@ -751,8 +753,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 2180,
-	"y": 940,
+	"x": 2240,
+	"y": 1180,
 	"wires": [
 		["25acb6f4.cad04a"]
 	]
@@ -779,8 +781,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 2180,
-	"y": 1000,
+	"x": 2240,
+	"y": 1240,
 	"wires": [
 		["63d76ed3.1279b"]
 	]
@@ -807,8 +809,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 2180,
-	"y": 1060,
+	"x": 2240,
+	"y": 1300,
 	"wires": [
 		["ab0162d0.bf806"]
 	]
@@ -816,21 +818,21 @@
 	"id": "5f622b81.aabe34",
 	"type": "change",
 	"z": "807d8ce0.7020b8",
-	"name": "Habilitar Botão Iniciar Monitoramento",
+	"name": "Habilitar/Desabilitar Botão Iniciar Monitoramento",
 	"rules": [{
 		"t": "set",
 		"p": "enabled",
 		"pt": "msg",
-		"to": "false",
-		"tot": "bool"
+		"to": "payload",
+		"tot": "msg"
 	}],
 	"action": "",
 	"property": "",
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 690,
-	"y": 760,
+	"x": 790,
+	"y": 1000,
 	"wires": [
 		["7105f76a.996878"]
 	]
@@ -851,10 +853,10 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 1610,
-	"y": 900,
+	"x": 1670,
+	"y": 1140,
 	"wires": [
-		["ae08ba75.537508"]
+		["ae08ba75.537508", "5f622b81.aabe34"]
 	]
 }, {
 	"id": "9cf3c51b.be63f8",
@@ -873,10 +875,10 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 1610,
-	"y": 1100,
+	"x": 1690,
+	"y": 1320,
 	"wires": [
-		["ae08ba75.537508"]
+		["ae08ba75.537508", "4ee70891.ac3618"]
 	]
 }, {
 	"id": "ae08ba75.537508",
@@ -895,8 +897,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 1870,
-	"y": 1000,
+	"x": 1930,
+	"y": 1240,
 	"wires": [
 		["2247dbdb.d14464", "d47d2c67.d7c7d", "97fce7f6.50c198"]
 	]
@@ -904,14 +906,14 @@
 	"id": "1b119dec.063c32",
 	"type": "function",
 	"z": "807d8ce0.7020b8",
-	"name": "Verifica Valores",
-	"func": "let temp_min = global.get(\"temp_min\");\nlet temp_max = global.get(\"temp_max\");\nlet email = global.get(\"email\");\n\nif ((temp_min !== null) && (temp_max !== null))\n{\n    node.warn(\"1\");\n    if ((temp_min >= 0) && (temp_min < temp_max))\n    {\n        node.warn(\"2\");\n        if (email !== null)\n        {\n            node.warn(\"3\");\n            msg.payload = 1;\n            return msg;\n        }\n    }\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+	"name": "Validar Opções",
+	"func": "let temp_min = global.get(\"temp_min\");\nlet temp_max = global.get(\"temp_max\");\nlet email = global.get(\"email\");\n\nif ((temp_min !== null) && (temp_max !== null))\n{\n    if ((temp_min >= 0) && (temp_min < temp_max))\n    {\n        if (email !== null)\n        {\n            msg.payload = 1;\n            return msg;\n        }\n    }\n}\n\nmsg.payload = 0;\n\nreturn msg;",
 	"outputs": 1,
 	"noerr": 0,
 	"initialize": "",
 	"finalize": "",
-	"x": 1000,
-	"y": 900,
+	"x": 1060,
+	"y": 1140,
 	"wires": [
 		["d7af044a.0bfc38"]
 	]
@@ -929,8 +931,8 @@
 	"raw": false,
 	"topic": "Erro",
 	"name": "Notifica Usuário",
-	"x": 1800,
-	"y": 760,
+	"x": 1860,
+	"y": 1000,
 	"wires": [
 		[]
 	]
@@ -938,7 +940,7 @@
 	"id": "d7af044a.0bfc38",
 	"type": "switch",
 	"z": "807d8ce0.7020b8",
-	"name": "Switch Valores",
+	"name": "Continuar se validação é positiva",
 	"property": "payload",
 	"propertyType": "msg",
 	"rules": [{
@@ -953,11 +955,11 @@
 	"checkall": "false",
 	"repair": false,
 	"outputs": 2,
-	"x": 1260,
-	"y": 900,
+	"x": 1320,
+	"y": 1140,
 	"wires": [
 		["3cb8c777.cd2008"],
-		["2c23a876.c2bb08", "5f622b81.aabe34", "1903f891.b2faa7"]
+		["2c23a876.c2bb08", "1903f891.b2faa7"]
 	]
 }, {
 	"id": "3cb8c777.cd2008",
@@ -976,8 +978,8 @@
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 1540,
-	"y": 760,
+	"x": 1600,
+	"y": 1000,
 	"wires": [
 		["cfb04367.ab70b"]
 	]
@@ -985,7 +987,7 @@
 	"id": "b92144ca.4cd498",
 	"type": "switch",
 	"z": "807d8ce0.7020b8",
-	"name": "",
+	"name": "Continuar se Temperatura Atual é superior que a configurada",
 	"property": "payload",
 	"propertyType": "msg",
 	"rules": [{
@@ -996,16 +998,16 @@
 	"checkall": "true",
 	"repair": false,
 	"outputs": 1,
-	"x": 1190,
-	"y": 220,
+	"x": 2160,
+	"y": 540,
 	"wires": [
-		["3a7e4e6.93c99b2"]
+		["53807f6f.5aefd"]
 	]
 }, {
 	"id": "ff2d0045.cc8d",
 	"type": "switch",
 	"z": "807d8ce0.7020b8",
-	"name": "",
+	"name": "Continuar se Temperatura Atual é inferior que a configurada",
 	"property": "payload",
 	"propertyType": "msg",
 	"rules": [{
@@ -1016,50 +1018,28 @@
 	"checkall": "true",
 	"repair": false,
 	"outputs": 1,
-	"x": 1190,
-	"y": 300,
+	"x": 2160,
+	"y": 620,
 	"wires": [
-		["3a7e4e6.93c99b2"]
+		["53807f6f.5aefd"]
 	]
 }, {
 	"id": "5418e19f.4015b",
 	"type": "http request",
 	"z": "807d8ce0.7020b8",
 	"name": "Notificar Usuário",
-	"method": "PUT",
+	"method": "GET",
 	"ret": "txt",
-	"paytoqs": "body",
-	"url": "172.18.1.4",
+	"paytoqs": "query",
+	"url": "172.18.1.4/notificar",
 	"tls": "",
 	"persist": false,
 	"proxy": "",
 	"authType": "",
-	"x": 1650,
-	"y": 260,
+	"x": 3290,
+	"y": 580,
 	"wires": [
-		[]
-	]
-}, {
-	"id": "3a7e4e6.93c99b2",
-	"type": "change",
-	"z": "807d8ce0.7020b8",
-	"name": "Enviar Temp Atual",
-	"rules": [{
-		"t": "set",
-		"p": "payload",
-		"pt": "msg",
-		"to": "temp_atual",
-		"tot": "global"
-	}],
-	"action": "",
-	"property": "",
-	"from": "",
-	"to": "",
-	"reg": false,
-	"x": 1430,
-	"y": 260,
-	"wires": [
-		["5418e19f.4015b"]
+		["c5399ba.352d868"]
 	]
 }, {
 	"id": "e3c4ef86.fadee",
@@ -1068,19 +1048,159 @@
 	"name": "Salvar Temp Atual",
 	"rules": [{
 		"t": "set",
+		"p": "temp_atual",
+		"pt": "global",
+		"to": "payload",
+		"tot": "msg"
+	}, {
+		"t": "set",
 		"p": "payload",
 		"pt": "msg",
-		"to": "temp_atual",
-		"tot": "global"
+		"to": "",
+		"tot": "date"
 	}],
 	"action": "",
 	"property": "",
 	"from": "",
 	"to": "",
 	"reg": false,
-	"x": 970,
-	"y": 140,
+	"x": 850,
+	"y": 580,
+	"wires": [
+		["9823ce2.47a5c3"]
+	]
+}, {
+	"id": "5b121658.881d38",
+	"type": "json",
+	"z": "807d8ce0.7020b8",
+	"name": "Converter string para JSON",
+	"property": "payload",
+	"action": "obj",
+	"pretty": false,
+	"x": 3040,
+	"y": 580,
+	"wires": [
+		["5418e19f.4015b"]
+	]
+}, {
+	"id": "53807f6f.5aefd",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "Criar string from valores de email e temperatura",
+	"func": "msg.payload = {\"email\":global.get(\"email\"),\"temperatura\":global.get(\"temp_atual\")};\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"initialize": "",
+	"finalize": "",
+	"x": 2660,
+	"y": 580,
+	"wires": [
+		["5b121658.881d38"]
+	]
+}, {
+	"id": "c5399ba.352d868",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "Salvar Hora Última Notificação",
+	"rules": [{
+		"t": "set",
+		"p": "notificacao",
+		"pt": "global",
+		"to": "",
+		"tot": "date"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 3570,
+	"y": 580,
 	"wires": [
 		[]
 	]
+}, {
+	"id": "897cb366.a22ca",
+	"type": "switch",
+	"z": "807d8ce0.7020b8",
+	"name": "Continuar se Verificação é Positiva",
+	"property": "payload",
+	"propertyType": "msg",
+	"rules": [{
+		"t": "eq",
+		"v": "1",
+		"vt": "num"
+	}],
+	"checkall": "true",
+	"repair": false,
+	"outputs": 1,
+	"x": 1460,
+	"y": 580,
+	"wires": [
+		["b9944ce7.0aa2b", "77ccdf08.8a09"]
+	]
+}, {
+	"id": "4ee70891.ac3618",
+	"type": "change",
+	"z": "807d8ce0.7020b8",
+	"name": "(Re)Inicializacao de Variaveis",
+	"rules": [{
+		"t": "set",
+		"p": "notificacao",
+		"pt": "global",
+		"to": "0",
+		"tot": "num"
+	}, {
+		"t": "set",
+		"p": "temp_min",
+		"pt": "global",
+		"to": "",
+		"tot": "num"
+	}, {
+		"t": "set",
+		"p": "temp_max",
+		"pt": "global",
+		"to": "",
+		"tot": "num"
+	}, {
+		"t": "set",
+		"p": "email",
+		"pt": "global",
+		"to": "",
+		"tot": "str"
+	}],
+	"action": "",
+	"property": "",
+	"from": "",
+	"to": "",
+	"reg": false,
+	"x": 1640,
+	"y": 1820,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "9823ce2.47a5c3",
+	"type": "function",
+	"z": "807d8ce0.7020b8",
+	"name": "Verificar Hora Última Modificação",
+	"func": "let timestamp_atual = msg.payload - 10;\nlet timestamp_anterior = global.get(\"notificacao\");\n\nnode.warn(timestamp_anterior);\n\nif (timestamp_anterior < timestamp_atual)\n{\n    msg.payload = 1;\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"initialize": "",
+	"finalize": "",
+	"x": 1140,
+	"y": 580,
+	"wires": [
+		["897cb366.a22ca"]
+	]
+}, {
+	"id": "eed73405.0cca68",
+	"type": "comment",
+	"z": "807d8ce0.7020b8",
+	"name": "REALIZAR TRATAMENTO DE OUTLIER AQUI",
+	"info": "",
+	"x": 550,
+	"y": 620,
+	"wires": []
 }]
