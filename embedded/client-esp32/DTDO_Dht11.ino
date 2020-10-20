@@ -1,7 +1,24 @@
-#include "lib/firebase/FirebaseESP8266.h"
+/**
+ * @author Michela Limaco - limaco@gmail.com
+ * @description Esse software é parte do trabalho da discplina de Tecnicas de Implementação de Software Avançadas
+ * da Pós-Graduação em Engenharia de Automação e Sistemas
+ * Professor: Carlos Montez
+ * Professor convidado: Evandro Cantú
+ * Outubro de 2020. 
+ * 
+ * Funcionamento: Lê um sinal do MQTT para iniciar ou parar a aquisição de dados de um sensor DHT11
+ * Publica as estatísticas do valor lido em um BD NoSQL - Firebase
+ * Adicionalmente implemente SVM para detecção de Outliers *  
+ */
+
+#include "FirebaseESP8266.h"
+#include "FirebaseJson.h"
 #include <ESP8266WiFi.h>
 #include <DHT.h>
-#include "lib/statistic/Statistic.h"
+#include "Statistic.h"
+
+#include <Arduino.h>
+#include <noveltyDetection.h>
 
 #include <PubSubClient.h> // Importa a Biblioteca PubSubClient
 #include <Time.h>
@@ -12,12 +29,12 @@
 
 #define ID_MQTT  "DHT11"
 #define TOPICO_SUBSCRIBE "dto/dht11/status"     //tópico MQTT de escuta
-/** #define TOPICO_PUBLISH "dto/dht11/data" Se for publicar o valor no MQTT ao invés do Firebase***/
+#define TOPICO_OUTLIER "dto/dht11/outlier"     //tópico MQTT de escuta
 
-#define FIREBASE_HOST "outbreak-control-floripa.firebaseio.com"
-#define FIREBASE_AUTH "rAqgraI9AMv4LSCS4c4g4TNZs1FtxdFXsqU6V0zu" 
-#define wifiSSID "ANDROMEDA"
-#define wifiPASS "6104225480"
+#define FIREBASE_HOST "seuprojeto.firebaseio.com"
+#define FIREBASE_AUTH "xxxxxsegredoDoBancoxxxxxxxxx" 
+#define wifiSSID "REDE_SSID"
+#define wifiPASS "REDE_PASS"
 
 int16_t utc = -3; //UTC -3:00 Brazil
 WiFiUDP ntpUDP;
@@ -33,11 +50,10 @@ char MAC_char[18];
 int wifiConected = LOW;
 
 // MQTT
-const char* BROKER_MQTT = "mosquito.l2cv.com.br"; //URL do broker MQTT que se deseja utilizar
+const char* BROKER_MQTT = "seu_mqtt_broker.com";
+const char* USER_MQTT = "user_mqtt"; //opcional
+const char* PASS_MQTT = "senha_mqtt"; //opcional
 int BROKER_PORT = 1883; // Porta do Broker MQTT
-const char* USER_MQTT = "mqtt-spy";
-const char* PASS_MQTT = "l2cv@123";
-
 
 //Variáveis e objetos globais
 WiFiClient espClient; // Cria o objeto espClient
@@ -69,7 +85,7 @@ void initMQTT(void);
 void reconnectMQTT(void);
 String dataFormatada(void);
 void syncClock(void);
-
+void injectOutlier(String);
   
 void setup(){
     Serial.begin(115200);
@@ -83,10 +99,22 @@ void setup(){
     
     tempStats.clear();
     umidStats.clear();
+
+    /*** Essa PARTE é exclusiva para o Machine Learning 
+     *  1 - abre o File System
+     *  2 - Inicia a EEPROM
+     *  3 - Lê o modelo e arquivos de parâmetros do FileSystem
+     */
+    SPIFFS.begin();
+    EEPROM.begin(1024);
+    Serial.print("Reading model from FileSystem Card into EEPROM...");
+    //Default filenames are "svm.mod" and "svm.par" for the model and parameter files, respectively
+    SVM_readModelFromSPIFFS(SVM_MODEL_FILENAME, SVM_SCALE_PARAMETERS_FILENAME);
+  
 }
 
 /*** Formata a data para ser parte da String salva no Firebase 
-     Format: 2016-02-08 15:16:32
+     Format: 2016-02-08
 ***/
 String dataFormatada(){
   String agora;
@@ -109,11 +137,14 @@ String dataFormatada(){
   if(segundo.length()<2)
     segundo = "0"+segundo;
     
-  //agora = String(ano)+"-"+String(mes)+"-"+String(dia)+"/"+String(hora)+":"+String(minuto)+":"+segundo;
   agora = String(ano)+"-"+String(mes)+"-"+String(dia);
   return agora;
 }
 
+
+/*** Formata a hora para ser parte da String salva no Firebase 
+     Format: HH:mm:ss
+***/
 String horaFormatada(){
   String agora;
   time_t t = now(); // Get the current time
@@ -128,7 +159,6 @@ String horaFormatada(){
   if(segundo.length()<2)
     segundo = "0"+segundo;
     
-  //agora = String(ano)+"-"+String(mes)+"-"+String(dia)+"/"+String(hora)+":"+String(minuto)+":"+segundo;
   agora = String(hora)+":"+String(minuto)+":"+String(segundo);
   return agora;
 }
@@ -176,9 +206,11 @@ void reconnectMQTT() {
     while (!MQTT.connected()) {
         Serial.print("* Tentando se conectar ao Broker MQTT: ");
         Serial.println(BROKER_MQTT);
-        if (MQTT.connect(ID_MQTT, USER_MQTT, PASS_MQTT)) {
+        //if (MQTT.connect(ID_MQTT)) {
+        if (MQTT.connect(ID_MQTT, USER_MQTT,PASS_MQTT)) {
             Serial.println("Conectado com sucesso ao broker MQTT!");
             MQTT.subscribe(TOPICO_SUBSCRIBE); 
+            MQTT.subscribe(TOPICO_OUTLIER); 
         }else{
             Serial.println("Falha ao reconectar no broker.");
             Serial.println("Havera nova tentatica de conexao em 2s");
@@ -194,8 +226,10 @@ void reconnectMQTT() {
 void initMQTT(){
     MQTT.setServer(BROKER_MQTT, BROKER_PORT);   //informa qual broker e porta deve ser conectado
     MQTT.setCallback(mqtt_callback);            //atribui função de callback (função chamada quando qualquer informação de um dos tópicos subescritos chega)
+    //MQTT.connect(ID_MQTT);
     MQTT.connect(ID_MQTT,USER_MQTT,PASS_MQTT);
     MQTT.subscribe(TOPICO_SUBSCRIBE);
+    MQTT.subscribe(TOPICO_OUTLIER); 
     Serial.println("INIT_MQTT");
 }
   
@@ -207,7 +241,6 @@ void initMQTT(){
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     String msg;
     Serial.println("MQTT_callback...");
- 
     //obtem a string do payload recebido
     for(int i = 0; i < length; i++) {
        char c = (char)payload[i];
@@ -215,10 +248,17 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     }
     Serial.print("Payload: ");
     Serial.println(msg);
-    if (msg.equals("1")){
+
+    if (strcmp(topic,TOPICO_SUBSCRIBE)==0){
+      if (msg.equals("1")){
         lerSensor=true;
+      }else{
+        lerSensor=false;
+      }  
     }else{
-      lerSensor=false;
+      Serial.print("Injecao de outlier...\t");
+      Serial.println(msg);  
+      injectOutlier(msg);
     }
 }
 
@@ -241,31 +281,85 @@ void readSensor(){
   
   String umidKey = leitura+"/umidade/"+horaFormatada();
   String tempKey = leitura+"/temperatura/"+horaFormatada();
-  /** String tempValue = tempKey+"/";
-  tempValue+="valor";**/
+
+  FirebaseJson jsonTemp;
+  FirebaseJson jsonUmid;
 
   if (tempStats.count() == 1000){
-  Serial.println("*****publica leitura Sensor*****");  
+  //Serial.println("*****publica leitura Sensor*****");  
+    jsonTemp.set("valor",temperatura_lida);
+    jsonTemp.set("min",tempStats.minimum());
+    jsonTemp.set("max",tempStats.maximum());
+    jsonTemp.set("media",tempStats.average());
+    jsonTemp.set("variancia",tempStats.variance());
+    jsonTemp.set("stdev",tempStats.pop_stdev());
 
-    Firebase.setFloat(firebaseData, tempKey+"/valor", temperatura_lida);
-    Firebase.setFloat(firebaseData, tempKey+"/min", tempStats.minimum());
-    Firebase.setFloat(firebaseData, tempKey+"/max", tempStats.maximum());
-    Firebase.setFloat(firebaseData, tempKey+"/media", tempStats.average());
-    Firebase.setFloat(firebaseData, tempKey+"/variancia", tempStats.variance());
-    Firebase.setFloat(firebaseData, tempKey+"/stdev", tempStats.pop_stdev());    
-
-    Firebase.setFloat(firebaseData, umidKey+"/valor", umidade_lida);
-    Firebase.setFloat(firebaseData, umidKey+"/min", umidStats.minimum());
-    Firebase.setFloat(firebaseData, umidKey+"/max", umidStats.maximum());
-    Firebase.setFloat(firebaseData, umidKey+"/media", umidStats.average());
-    Firebase.setFloat(firebaseData, umidKey+"/variancia", umidStats.variance());
-    Firebase.setFloat(firebaseData, umidKey+"/stdev", umidStats.pop_stdev());     
+    jsonUmid.set("valor",umidade_lida);
+    jsonUmid.set("min",umidStats.minimum());
+    jsonUmid.set("max",umidStats.maximum());
+    jsonUmid.set("media",umidStats.average());
+    jsonUmid.set("variancia",umidStats.variance());
+    jsonUmid.set("stdev",umidStats.pop_stdev());
+    
+    /** 
+    Passa a Temperatura Lida no Machine Learning,
+    Se o valor for um outlier - muito acima ou abaixo dos valores do modelo
+    então uma flag é setada    
+    **/
+    float sensor[] = {temperatura_lida};
+    float ret = SVM_predictEEPROM(sensor, sizeof(sensor)/sizeof(float));
+    ret = round(ret);
+    if (ret > 0) {
+      //Serial.println("NOT Novelty");
+      jsonTemp.set("outlier",false);
+    }else{
+      jsonTemp.set("outlier",true);
+     Serial.println("Novelty"); 
+    }
+    Firebase.setJSON(firebaseData, tempKey, jsonTemp);
+    Firebase.setJSON(firebaseData, umidKey, jsonUmid);
 
     tempStats.clear();
     umidStats.clear();  
     delay(2000);  
   }
-  //delay(100);
+}
+/**
+ * Recebe um valor via MQTT - para simular uma perturbação
+ * Passa no SVM_predict que retorna se é um Outlier
+ * Publica no firebase com a flag outlier=true
+ */
+void injectOutlier(String valor){
+  
+  String leitura = "/sensores";
+  leitura+="/";
+  leitura+=MAC_char;
+  leitura+="/";
+  leitura+=dataFormatada();
+  String tempKey = leitura+"/temperatura/"+horaFormatada();
+
+  float outlier = valor.toFloat();
+  FirebaseJson jsonTemp;
+
+    jsonTemp.set("valor",outlier);
+    jsonTemp.set("min",0.0);
+    jsonTemp.set("max",outlier);
+    jsonTemp.set("media",outlier);
+    jsonTemp.set("variancia",0.0);
+    jsonTemp.set("stdev",0.0);
+
+  
+  float sensor[] = {outlier};
+  float ret = SVM_predictEEPROM(sensor, sizeof(sensor)/sizeof(float));
+    ret = round(ret);
+    if (ret > 0) {
+      Serial.println("NOT Novelty");
+      jsonTemp.set("outlier",false);      
+    }else{
+      jsonTemp.set("outlier",true);
+      Serial.println("Novelty"); 
+    }
+    Firebase.setJSON(firebaseData, tempKey, jsonTemp);
 }
 
 void loop(){
