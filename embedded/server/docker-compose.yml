@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   node-red:
-    image: matuzalemmuller/tisa:node-red-insecure
+    build: node-red
     hostname: node-red
     container_name: node-red
     restart: always
@@ -15,31 +15,19 @@ services:
       default:
         ipv4_address: 172.18.1.2
 
-  mosquitto:
-    image: eclipse-mosquitto
-    hostname: mosquitto
-    container_name: mosquitto
-    restart: always
-    expose:
-      - "1883"
-      - "9001"
-    ports:
-      - "1883:1883"
-      - "9001:9001"
-    networks:
-      default:
-        ipv4_address: 172.18.1.3
-    
   flask-server:
-    image: matuzalemmuller/tisa:flask-server
-    hostname: flask-server
-    container_name: flask-server
+    build: flask
+    hostname: flask
+    container_name: flask
     restart: always
+    environment:
+      - APP_EMAIL_ADDRESS=email@example.com
+      - APP_PASSWORD=password
     expose:
       - "80"
     networks:
       default:
-        ipv4_address: 172.18.1.4
+        ipv4_address: 172.18.1.3
 
 networks:
   default:

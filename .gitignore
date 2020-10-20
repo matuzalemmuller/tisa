@@ -3,3 +3,7 @@
 
 # OSX file
 .DS_Store
+
+# docker-compose volume for Node-RED
+embedded/server/.data
+embedded/server/credentials.txt

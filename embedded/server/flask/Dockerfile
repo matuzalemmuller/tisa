@@ -3,7 +3,7 @@ FROM python:3.7.2-alpine
 WORKDIR /app
 
 COPY requirements.txt /app
-COPY flask_test.py /app
+COPY flask_server.py /app
 
 RUN pip3 install -r requirements.txt
 
