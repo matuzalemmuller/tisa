@@ -158,6 +158,33 @@
 	"width": 2,
 	"height": 1
 }, {
+	"id": "487cfde9.18b4c4",
+	"type": "mqtt-broker",
+	"z": "",
+	"name": "",
+	"broker": "",
+	"port": "1883",
+	"clientid": "",
+	"usetls": false,
+	"compatmode": false,
+	"keepalive": "60",
+	"cleansession": true,
+	"birthTopic": "",
+	"birthQos": "0",
+	"birthPayload": "",
+	"closeTopic": "",
+	"closeQos": "0",
+	"closePayload": "",
+	"willTopic": "",
+	"willQos": "0",
+	"willPayload": ""
+}, {
+	"id": "2d338718.b03eb8",
+	"type": "firebase config",
+	"z": "",
+	"firebaseurl": "",
+	"loginType": "none"
+}, {
 	"id": "db4cf772.67c6f",
 	"type": "mqtt out",
 	"z": "807d8ce0.7020b8",
@@ -165,7 +192,7 @@
 	"topic": "dto/dht11/status",
 	"qos": "0",
 	"retain": "",
-	"broker": "",
+	"broker": "487cfde9.18b4c4",
 	"x": 810,
 	"y": 340,
 	"wires": []
@@ -183,7 +210,7 @@
 	"type": "firebase.on",
 	"z": "807d8ce0.7020b8",
 	"name": "Adquirir Med Temperatura Banco",
-	"firebaseconfig": "",
+	"firebaseconfig": "2d338718.b03eb8",
 	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-20/temperatura",
 	"atStart": true,
 	"eventType": "value",
@@ -245,24 +272,6 @@
 	"y": 720,
 	"wires": [
 		[]
-	]
-}, {
-	"id": "ed1e70f2.c42428",
-	"type": "firebase.on",
-	"z": "807d8ce0.7020b8",
-	"name": "Adquirir Med Umidade Banco",
-	"firebaseconfig": "",
-	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-20/umidade",
-	"atStart": true,
-	"eventType": "value",
-	"queries": [{
-		"name": "limitToLast",
-		"value": "1"
-	}],
-	"x": 220,
-	"y": 800,
-	"wires": [
-		["e7c453ef.a593d"]
 	]
 }, {
 	"id": "e7c453ef.a593d",
@@ -708,6 +717,12 @@
 		"pt": "msg",
 		"to": "false",
 		"tot": "bool"
+	}, {
+		"t": "set",
+		"p": "notificacao_ativada",
+		"pt": "global",
+		"to": "true",
+		"tot": "bool"
 	}],
 	"action": "",
 	"property": "",
@@ -729,6 +744,12 @@
 		"p": "enabled",
 		"pt": "msg",
 		"to": "true",
+		"tot": "bool"
+	}, {
+		"t": "set",
+		"p": "notificacao_ativada",
+		"pt": "global",
+		"to": "false",
 		"tot": "bool"
 	}],
 	"action": "",
@@ -953,6 +974,12 @@
 		"pt": "msg",
 		"to": "notificacao",
 		"tot": "global"
+	}, {
+		"t": "set",
+		"p": "dado_em_processamento",
+		"pt": "global",
+		"to": "false",
+		"tot": "bool"
 	}],
 	"action": "",
 	"property": "",
@@ -1013,6 +1040,18 @@
 		"pt": "global",
 		"to": "",
 		"tot": "str"
+	}, {
+		"t": "set",
+		"p": "dado_em_processamento",
+		"pt": "global",
+		"to": "false",
+		"tot": "bool"
+	}, {
+		"t": "set",
+		"p": "notificacao_ativada",
+		"pt": "global",
+		"to": "false",
+		"tot": "bool"
 	}],
 	"action": "",
 	"property": "",
@@ -1029,7 +1068,7 @@
 	"type": "function",
 	"z": "807d8ce0.7020b8",
 	"name": "Verificar Hora Última Modificacao",
-	"func": "// 300000 - 5 minutos, intervalo de envio de emails\nlet timestamp_atual = msg.payload - 300000;\nlet timestamp_anterior = global.get(\"notificacao\");\nlet email = global.get(\"email\");\n\nif (email)\n{\n    if (timestamp_anterior < timestamp_atual)\n    {\n        msg.payload = 1;\n    }\n    else\n    {\n        msg.payload = 0;\n    }\n}\nelse\n{\n    msg.payload = 0;   \n}\n\nreturn msg;",
+	"func": "// 300000 - 5 minutos, intervalo de envio de emails\nlet timestamp_atual = msg.payload - 300000;\nlet timestamp_anterior = global.get(\"notificacao\");\nlet email = global.get(\"email\");\nlet dado_em_processamento = global.get(\"dado_em_processamento\");\nlet notificacao_ativada = global.get(\"notificacao_ativada\");\n\nif (email && notificacao_ativada && !dado_em_processamento)\n{\n    if (timestamp_anterior < timestamp_atual)\n    {\n        msg.payload = 1;\n        global.set(\"dado_em_processamento\", true);\n    }\n    else\n    {\n        msg.payload = 0;\n    }\n}\nelse\n{\n    msg.payload = 0;   \n}\n\nreturn msg;",
 	"outputs": 1,
 	"noerr": 0,
 	"initialize": "",
@@ -1206,5 +1245,23 @@
 	"y": 1540,
 	"wires": [
 		["ab0162d0.bf806"]
+	]
+}, {
+	"id": "ed1e70f2.c42428",
+	"type": "firebase.on",
+	"z": "807d8ce0.7020b8",
+	"name": "Adquirir Med Umidade Banco",
+	"firebaseconfig": "2d338718.b03eb8",
+	"childpath": "sensores/60:01:94:38:12:a7:/2020-10-20/umidade",
+	"atStart": true,
+	"eventType": "value",
+	"queries": [{
+		"name": "limitToLast",
+		"value": "1"
+	}],
+	"x": 220,
+	"y": 800,
+	"wires": [
+		["e7c453ef.a593d"]
 	]
 }]

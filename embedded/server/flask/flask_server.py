@@ -15,10 +15,11 @@ mail = Mail(app)
 
 @app.route("/notificar")
 def index():
+  email_sender = os.environ.get('APP_EMAIL_ADDRESS')
   email = str(request.args.get('email'))
   temperatura = str(request.args.get('temperatura'))
-  msg = Message('NOTIFICAÇÃO - Alteração de Temperatura', sender = 'projetodetisa@gmail.com', recipients = [email])
-  msg.body = "A temperatura atual é de " + temperatura
+  msg = Message('NOTIFICAÇÃO - Alteração de Temperatura', sender = email_sender, recipients = [email])
+  msg.body = "A temperatura atual é de " + temperatura + " °C"
   mail.send(msg)
   print("\n\n\n\n\n" + email + "   " + temperatura)
   return "Sent"
