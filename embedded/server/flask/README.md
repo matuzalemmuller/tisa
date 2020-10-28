@@ -1,0 +1,1 @@
+Contains the code to run a flask server that notifies users about temperatures out of range via email given the `email` and `temperature` parameters.
